@@ -223,6 +223,7 @@
     <commons.junit.version>5.9.1</commons.junit.version>
     <findbugs.skip>true</findbugs.skip>
     <japicmp.skip>false</japicmp.skip>
+    <rat.skip>true</rat.skip>
     <commons.releaseManagerName>Rob Tompkins</commons.releaseManagerName>
     <commons.releaseManagerKey>B6E73D84EA4FCC47166087253FAAD2CD5ECBB314</commons.releaseManagerKey>
   </properties>
