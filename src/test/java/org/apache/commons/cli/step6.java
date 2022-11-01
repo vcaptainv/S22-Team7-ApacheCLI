@@ -23,145 +23,22 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
+/**
+ * function tested: getOptionValue(opt, defaultValue)
+ * Capability tested: 1b
+ * related test case:
+ * @throws Exception
+ */
+
 @SuppressWarnings("deprecation") // tests some deprecated classes
 public class step6 {
 
+    /**
+     * related test case:
+     * @throws Exception
+     */
     @Test
-    public void testBuilder() {
-        final CommandLine.Builder builder = new CommandLine.Builder();
-        builder.addArg("foo").addArg("bar");
-        builder.addOption(Option.builder("T").build());
-        final CommandLine cmd = builder.build();
-
-        assertEquals("foo", cmd.getArgs()[0]);
-        assertEquals("bar", cmd.getArgList().get(1));
-        assertEquals("T", cmd.getOptions()[0].getOpt());
-    }
-
-    @Test
-    public void testGetOptionProperties() throws Exception {
-        final String[] args = {"-Dparam1=value1", "-Dparam2=value2", "-Dparam3", "-Dparam4=value4", "-D", "--property", "foo=bar"};
-
-        final Options options = new Options();
-        options.addOption(OptionBuilder.withValueSeparator().hasOptionalArgs(2).create('D'));
-        options.addOption(OptionBuilder.withValueSeparator().hasArgs(2).withLongOpt("property").create());
-
-        final Parser parser = new GnuParser();
-        final CommandLine cl = parser.parse(options, args);
-
-        final Properties props = cl.getOptionProperties("D");
-        assertNotNull("null properties", props);
-        assertEquals("number of properties in " + props, 4, props.size());
-        assertEquals("property 1", "value1", props.getProperty("param1"));
-        assertEquals("property 2", "value2", props.getProperty("param2"));
-        assertEquals("property 3", "true", props.getProperty("param3"));
-        assertEquals("property 4", "value4", props.getProperty("param4"));
-
-        assertEquals("property with long format", "bar", cl.getOptionProperties("property").getProperty("foo"));
-    }
-
-    @Test
-    public void testGetOptionPropertiesWithOption() throws Exception {
-        final String[] args = {"-Dparam1=value1", "-Dparam2=value2", "-Dparam3", "-Dparam4=value4", "-D", "--property", "foo=bar"};
-
-        final Options options = new Options();
-        final Option optionD = OptionBuilder.withValueSeparator().hasOptionalArgs(2).create('D');
-        final Option optionProperty = OptionBuilder.withValueSeparator().hasArgs(2).withLongOpt("property").create();
-        options.addOption(optionD);
-        options.addOption(optionProperty);
-
-        final Parser parser = new GnuParser();
-        final CommandLine cl = parser.parse(options, args);
-
-        final Properties props = cl.getOptionProperties(optionD);
-        assertNotNull("null properties", props);
-        assertEquals("number of properties in " + props, 4, props.size());
-        assertEquals("property 1", "value1", props.getProperty("param1"));
-        assertEquals("property 2", "value2", props.getProperty("param2"));
-        assertEquals("property 3", "true", props.getProperty("param3"));
-        assertEquals("property 4", "value4", props.getProperty("param4"));
-
-        assertEquals("property with long format", "bar", cl.getOptionProperties(optionProperty).getProperty("foo"));
-    }
-
-    @Test
-    public void testGetOptions() {
-        final CommandLine cmd = new CommandLine();
-        assertNotNull(cmd.getOptions());
-        assertEquals(0, cmd.getOptions().length);
-
-        cmd.addOption(new Option("a", null));
-        cmd.addOption(new Option("b", null));
-        cmd.addOption(new Option("c", null));
-
-        assertEquals(3, cmd.getOptions().length);
-    }
-
-    @Test
-    public void testGetParsedOptionValue() throws Exception {
-        final Options options = new Options();
-        options.addOption(OptionBuilder.hasArg().withType(Number.class).create("i"));
-        options.addOption(OptionBuilder.hasArg().create("f"));
-
-        final CommandLineParser parser = new DefaultParser();
-        final CommandLine cmd = parser.parse(options, new String[] {"-i", "123", "-f", "foo"});
-
-        assertEquals(123, ((Number) cmd.getParsedOptionValue("i")).intValue());
-        assertEquals("foo", cmd.getParsedOptionValue("f"));
-    }
-
-    @Test
-    public void testGetParsedOptionValueWithChar() throws Exception {
-        final Options options = new Options();
-        options.addOption(Option.builder("i").hasArg().type(Number.class).build());
-        options.addOption(Option.builder("f").hasArg().build());
-
-        final CommandLineParser parser = new DefaultParser();
-        final CommandLine cmd = parser.parse(options, new String[] {"-i", "123", "-f", "foo"});
-
-        assertEquals(123, ((Number) cmd.getParsedOptionValue('i')).intValue());
-        assertEquals("foo", cmd.getParsedOptionValue('f'));
-    }
-
-    @Test
-    public void testGetParsedOptionValueWithOption() throws Exception {
-        final Options options = new Options();
-        final Option optI = Option.builder("i").hasArg().type(Number.class).build();
-        final Option optF = Option.builder("f").hasArg().build();
-        options.addOption(optI);
-        options.addOption(optF);
-
-        final CommandLineParser parser = new DefaultParser();
-        final CommandLine cmd = parser.parse(options, new String[] {"-i", "123", "-f", "foo"});
-
-        assertEquals(123, ((Number) cmd.getParsedOptionValue(optI)).intValue());
-        assertEquals("foo", cmd.getParsedOptionValue(optF));
-    }
-
-    @Test
-    public void testNullhOption() throws Exception {
-        final Options options = new Options();
-        final Option optI = Option.builder("i").hasArg().type(Number.class).build();
-        final Option optF = Option.builder("f").hasArg().build();
-        options.addOption(optI);
-        options.addOption(optF);
-        final CommandLineParser parser = new DefaultParser();
-        final CommandLine cmd = parser.parse(options, new String[] {"-i", "123", "-f", "foo"});
-        assertNull(cmd.getOptionValue((Option) null));
-        assertNull(cmd.getParsedOptionValue((Option) null));
-    }
-
-
-    @Test
-    public void testDeprecatedGetOptionValueFunction(){
-        final CommandLine cmd = new CommandLine();
-
-        cmd.addOption(new Option("a", null));
-        cmd.getOptionObject("a");
-    }
-
-    @Test
-    public void testCapability1b1() throws Exception {
+    public void getOptionValueWithNullOptionAndNullDefault() throws Exception {
         final Options options = new Options();
         options.addOption(OptionBuilder.hasArg().create("f"));
 
@@ -171,8 +48,12 @@ public class step6 {
         assertEquals(null, cmd.getOptionValue((Option) null, null));
     }
 
+    /**
+     * related test case:
+     * @throws Exception
+     */
     @Test
-    public void testCapability1b2() throws Exception {
+    public void getOptionValueWithNullOptionAndEmptyDefault() throws Exception {
         final Options options = new Options();
         options.addOption(OptionBuilder.hasArg().create("f"));
 
@@ -182,8 +63,12 @@ public class step6 {
         assertEquals("", cmd.getOptionValue((Option) null, ""));
     }
 
+    /**
+     * related test case:
+     * @throws Exception
+     */
     @Test
-    public void testCapability1b3() throws Exception {
+    public void getOptionValueWithNullOptionAndDefaultLengthOne() throws Exception {
         final Options options = new Options();
         options.addOption(OptionBuilder.hasArg().create("f"));
 
@@ -193,8 +78,12 @@ public class step6 {
         assertEquals("1", cmd.getOptionValue((Option) null, "1"));
     }
 
+    /**
+     * related test case:
+     * @throws Exception
+     */
     @Test
-    public void testCapability1b4() throws Exception {
+    public void getOptionValueWithNullOptionAndDefaultLengthMoreThanOne() throws Exception {
         final Options options = new Options();
         options.addOption(OptionBuilder.hasArg().create("f"));
 
@@ -204,8 +93,12 @@ public class step6 {
         assertEquals("13", cmd.getOptionValue((Option) null, "13"));
     }
 
+    /**
+     * related test case:
+     * @throws Exception
+     */
     @Test
-    public void testCapability1b5() throws Exception {
+    public void getOptionValueWithEmptyOptionAndNullDefault() throws Exception {
         final Options options = new Options();
         Option opt = OptionBuilder.hasArg().create("");
         options.addOption(opt);
@@ -216,8 +109,12 @@ public class step6 {
         assertEquals(null, cmd.getOptionValue("", null));
     }
 
+    /**
+     * related test case:
+     * @throws Exception
+     */
     @Test
-    public void testCapability1b6() throws Exception {
+    public void getOptionValueWithEmptyOptionAndEmptyDefault() throws Exception {
         final Options options = new Options();
         Option opt = OptionBuilder.hasArg().create("");
         options.addOption(opt);
@@ -227,8 +124,12 @@ public class step6 {
         assertEquals("", cmd.getOptionValue("", ""));
     }
 
+    /**
+     * related test case:
+     * @throws Exception
+     */
     @Test
-    public void testCapability1b7() throws Exception {
+    public void getOptionValueWithEmptyOptionAndNullDefaultOfLengthOne() throws Exception {
         final Options options = new Options();
         Option opt = OptionBuilder.hasArg().create("");
         options.addOption(opt);
@@ -238,8 +139,12 @@ public class step6 {
         assertEquals("O", cmd.getOptionValue("", "O"));
     }
 
+    /**
+     * related test case:
+     * @throws Exception
+     */
     @Test
-    public void testCapability1b8() throws Exception {
+    public void getOptionValueWithEmptyOptionAndNullDefaultOfLengthThree() throws Exception {
         final Options options = new Options();
         Option opt = OptionBuilder.hasArg().create("");
         options.addOption(opt);
@@ -249,8 +154,12 @@ public class step6 {
         assertEquals("foo", cmd.getOptionValue("", "foo"));
     }
 
+    /**
+     * related test case:
+     * @throws Exception
+     */
     @Test
-    public void testCapability1b9() throws Exception {
+    public void getOptionValueWithOptionOfLengthOneAndNullDefault() throws Exception {
         final Options options = new Options();
         Option opt = OptionBuilder.hasArg().create("a");
         options.addOption(opt);
@@ -260,8 +169,12 @@ public class step6 {
         assertEquals("foo", cmd.getOptionValue("a", null));
     }
 
+    /**
+     * related test case:
+     * @throws Exception
+     */
     @Test
-    public void testCapability1b10() throws Exception {
+    public void getOptionValueWithOptionOfLengthOneAndEmptyDefault() throws Exception {
         final Options options = new Options();
         Option opt = OptionBuilder.hasArg().create("b");
         options.addOption(opt);
@@ -271,30 +184,42 @@ public class step6 {
         assertEquals("foo", cmd.getOptionValue("b", ""));
     }
 
+    /**
+     * related test case:
+     * @throws Exception
+     */
     @Test
-    public void testCapability1b11() throws Exception {
+    public void getOptionValueWithOptionOfLengthOneAndDefaultOfLengthOne() throws Exception {
         final Options options = new Options();
-        Option opt = OptionBuilder.hasArg().create("b");
+        Option opt = OptionBuilder.hasArg().create("c");
         options.addOption(opt);
         final CommandLineParser parser = new DefaultParser();
-        final CommandLine cmd = parser.parse(options, new String[] {"-b", "foo"});
+        final CommandLine cmd = parser.parse(options, new String[] {"-c", "foo"});
 
-        assertEquals("foo", cmd.getOptionValue("b", "9"));
+        assertEquals("foo", cmd.getOptionValue("c", "9"));
     }
 
+    /**
+     * related test case:
+     * @throws Exception
+     */
     @Test
-    public void testCapability1b12() throws Exception {
+    public void getOptionValueWithOptionOfLengthOneAndDefaultOfLengthFour() throws Exception {
         final Options options = new Options();
-        Option opt = OptionBuilder.hasArg().create("b");
+        Option opt = OptionBuilder.hasArg().create("d");
         options.addOption(opt);
         final CommandLineParser parser = new DefaultParser();
-        final CommandLine cmd = parser.parse(options, new String[] {"-b", "foo"});
+        final CommandLine cmd = parser.parse(options, new String[] {"-d", "foo"});
 
-        assertEquals("foo", cmd.getOptionValue("b", "6784"));
+        assertEquals("foo", cmd.getOptionValue("d", "6784"));
     }
 
+    /**
+     * related test case:
+     * @throws Exception
+     */
     @Test
-    public void testCapability1b13() throws Exception {
+    public void getOptionValueWithLongOptionAndNullDefault() throws Exception {
         final Options options = new Options();
         final Option opt = OptionBuilder.withValueSeparator().hasArgs(1).withLongOpt("parameter").create();
         options.addOption(opt);
@@ -304,19 +229,27 @@ public class step6 {
         assertEquals("foo", cmd.getOptionValue("parameter", null));
     }
 
+    /**
+     * related test case:
+     * @throws Exception
+     */
     @Test
-    public void testCapability1b14() throws Exception {
+    public void getOptionValueWithLongOptionAndEmptyDefault() throws Exception {
         final Options options = new Options();
-        final Option opt = OptionBuilder.withValueSeparator().hasArgs(1).withLongOpt("parameter").create();
+        final Option opt = OptionBuilder.withValueSeparator().hasArgs(1).withLongOpt("time").create();
         options.addOption(opt);
         final CommandLineParser parser = new DefaultParser();
-        final CommandLine cmd = parser.parse(options, new String[] {"-parameter", "foo"});
+        final CommandLine cmd = parser.parse(options, new String[] {"-time", "foo"});
 
-        assertEquals("foo", cmd.getOptionValue("parameter", ""));
+        assertEquals("foo", cmd.getOptionValue("time", ""));
     }
 
+    /**
+     * related test case:
+     * @throws Exception
+     */
     @Test
-    public void testCapability1b15() throws Exception {
+    public void getOptionValueWithLongOptionAndDefaultOfLengthOne() throws Exception {
         final Options options = new Options();
         final Option opt = OptionBuilder.withValueSeparator().hasArgs(1).withLongOpt("ii").create();
         options.addOption(opt);
@@ -326,19 +259,27 @@ public class step6 {
         assertEquals("foo", cmd.getOptionValue("ii", "2"));
     }
 
+    /**
+     * related test case:
+     * @throws Exception
+     */
     @Test
-    public void testCapability1b16() throws Exception {
+    public void getOptionValueWithLongOptionAndDefaultOfLengthTwo() throws Exception {
         final Options options = new Options();
-        final Option opt = OptionBuilder.withValueSeparator().hasArgs(1).withLongOpt("ii").create();
+        final Option opt = OptionBuilder.withValueSeparator().hasArgs(1).withLongOpt("interval").create();
         options.addOption(opt);
         final CommandLineParser parser = new DefaultParser();
-        final CommandLine cmd = parser.parse(options, new String[] {"-ii", "foo"});
+        final CommandLine cmd = parser.parse(options, new String[] {"-interval", "foo"});
 
-        assertEquals("foo", cmd.getOptionValue("ii", "23"));
+        assertEquals("foo", cmd.getOptionValue("interval", "23"));
     }
 
+    /**
+     * related test case:
+     * @throws Exception
+     */
     @Test
-    public void testCapability1b17() throws Exception {
+    public void getOptionValueWithCharOptionAndDefaultOfLengthFour() throws Exception {
         final Options options = new Options();
         Option opt = OptionBuilder.hasArg().create("i");
         options.addOption(opt);
@@ -348,19 +289,27 @@ public class step6 {
         assertEquals("foo", cmd.getOptionValue('i', "2345"));
     }
 
+    /**
+     * related test case:
+     * @throws Exception
+     */
     @Test
-    public void testCapability1b18() throws Exception {
+    public void getOptionValueWithCharOptionAndNullDefault() throws Exception {
         final Options options = new Options();
-        Option opt = OptionBuilder.hasArg().create("i");
+        Option opt = OptionBuilder.hasArg().create("v");
         options.addOption(opt);
         final CommandLineParser parser = new DefaultParser();
-        final CommandLine cmd = parser.parse(options, new String[] {"-i", "foo"});
+        final CommandLine cmd = parser.parse(options, new String[] {"-v", "foo"});
 
-        assertEquals("foo", cmd.getOptionValue('i', null));
+        assertEquals("foo", cmd.getOptionValue('v', null));
     }
 
+    /**
+     * related test case:
+     * @throws Exception
+     */
     @Test
-    public void testCapability1b19() throws Exception {
+    public void getOptionValueWithCharOptionAndEmptyDefault() throws Exception {
         final Options options = new Options();
         Option opt = OptionBuilder.hasArg().create("b");
         options.addOption(opt);
@@ -370,30 +319,42 @@ public class step6 {
         assertEquals("foo", cmd.getOptionValue('b', ""));
     }
 
+    /**
+     * related test case:
+     * @throws Exception
+     */
     @Test
-    public void testCapability1b20() throws Exception {
+    public void getOptionValueWithCharOptionAndDefaultOfLengthOne() throws Exception {
         final Options options = new Options();
-        Option opt = OptionBuilder.hasArg().create("B");
+        Option opt = OptionBuilder.hasArg().create("y");
         options.addOption(opt);
         final CommandLineParser parser = new DefaultParser();
-        final CommandLine cmd = parser.parse(options, new String[] {"-B", "foo"});
+        final CommandLine cmd = parser.parse(options, new String[] {"-y", "foo"});
 
-        assertEquals("foo", cmd.getOptionValue('B', "1"));
+        assertEquals("foo", cmd.getOptionValue('y', "1"));
     }
 
+    /**
+     * related test case:
+     * @throws Exception
+     */
     @Test
-    public void testCapability1b21() throws Exception {
+    public void getOptionValueWithBoundaryCharOptionAndDefaultOfLengthFour() throws Exception {
         final Options options = new Options();
-        Option opt = OptionBuilder.hasArg().create("A");
+        Option opt = OptionBuilder.hasArg().create("a");
         options.addOption(opt);
         final CommandLineParser parser = new DefaultParser();
-        final CommandLine cmd = parser.parse(options, new String[] {"-A", "foo"});
+        final CommandLine cmd = parser.parse(options, new String[] {"-a", "foo"});
 
-        assertEquals("foo", cmd.getOptionValue('A', "2343"));
+        assertEquals("foo", cmd.getOptionValue('a', "2343"));
     }
 
+    /**
+     * related test case:
+     * @throws Exception
+     */
     @Test
-    public void testCapability1b22() throws Exception {
+    public void getOptionValueWithBoundaryCharOptionAndDefaultOfLengthThree() throws Exception {
         final Options options = new Options();
         Option opt = OptionBuilder.hasArg().create("z");
         options.addOption(opt);
@@ -403,19 +364,27 @@ public class step6 {
         assertEquals("foo", cmd.getOptionValue('z', "345"));
     }
 
+    /**
+     * related test case:
+     * @throws Exception
+     */
     @Test
-    public void testCapability1b23() throws Exception {
+    public void getOptionValueWithBoundaryCharOptionAndDefaultOfLengthOne() throws Exception {
         final Options options = new Options();
-        Option opt = OptionBuilder.hasArg().create("a");
+        Option opt = OptionBuilder.hasArg().create("A");
         options.addOption(opt);
         final CommandLineParser parser = new DefaultParser();
-        final CommandLine cmd = parser.parse(options, new String[] {"-a", "foo"});
+        final CommandLine cmd = parser.parse(options, new String[] {"-A", "foo"});
 
-        assertEquals("foo", cmd.getOptionValue('a', "a"));
+        assertEquals("foo", cmd.getOptionValue('A', "a"));
     }
 
+    /**
+     * related test case:
+     * @throws Exception
+     */
     @Test
-    public void testCapability1b24() throws Exception {
+    public void getOptionValueWithBoundaryCharOptionAndDefault() throws Exception {
         final Options options = new Options();
         Option opt = OptionBuilder.hasArg().create("Z");
         options.addOption(opt);
@@ -425,18 +394,26 @@ public class step6 {
         assertEquals("foo", cmd.getOptionValue('Z', "a"));
     }
 
+    /**
+     * related test case:
+     * @throws Exception
+     */
     @Test
-    public void testCapability1b25() throws Exception {
+    public void getOptionValueWithCharOptionAndDefault() throws Exception {
         final Options options = new Options();
-        Option opt = OptionBuilder.hasArg().create("y");
+        Option opt = OptionBuilder.hasArg().create("B");
         options.addOption(opt);
         final CommandLineParser parser = new DefaultParser();
-        final CommandLine cmd = parser.parse(options, new String[] {"-y", "foo"});
-        assertEquals("foo", cmd.getOptionValue('y', "a"));
+        final CommandLine cmd = parser.parse(options, new String[] {"-B", "foo"});
+        assertEquals("foo", cmd.getOptionValue('B', "a"));
     }
 
+    /**
+     * related test case:
+     * @throws Exception
+     */
     @Test
-    public void testCapability1b30() throws Exception {
+    public void getOptionValueWithInvalidOptionObjectAndDefaultOfLengthThree() throws Exception {
         final Options options = new Options();
         Option opt = OptionBuilder.hasArg().create("q");
         options.addOption(opt);
@@ -445,8 +422,12 @@ public class step6 {
         assertEquals("123", cmd.getOptionValue(opt, "123"));
     }
 
+    /**
+     * related test case:
+     * @throws Exception
+     */
     @Test
-    public void testCapability1b31() throws Exception {
+    public void getOptionValueWithInvalidOptionObjectAndNullDefault() throws Exception {
         final Options options = new Options();
         Option opt = OptionBuilder.hasArg().create("s");
         options.addOption(opt);
@@ -456,8 +437,12 @@ public class step6 {
         assertEquals(null, cmd.getOptionValue(opt, null));
     }
 
+    /**
+     * related test case:
+     * @throws Exception
+     */
     @Test
-    public void testCapability1b32() throws Exception {
+    public void getOptionValueWithInvalidOptionObjectAndEmptyDefault() throws Exception {
         final Options options = new Options();
         Option opt = OptionBuilder.hasArg().create("a");
         options.addOption(opt);
@@ -466,8 +451,12 @@ public class step6 {
         assertEquals("", cmd.getOptionValue(opt, ""));
     }
 
+    /**
+     * related test case:
+     * @throws Exception
+     */
     @Test
-    public void testCapability1b33() throws Exception {
+    public void getOptionValueWithInvalidOptionObjectAndDefaultOfLengthOne() throws Exception {
         final Options options = new Options();
         Option opt = OptionBuilder.hasArg().create("z");
         options.addOption(opt);
@@ -476,8 +465,12 @@ public class step6 {
         assertEquals("1", cmd.getOptionValue(opt, "1"));
     }
 
+    /**
+     * related test case:
+     * @throws Exception
+     */
     @Test
-    public void testCapability1b34() throws Exception {
+    public void getOptionValueWithValidOptionObjectAndDefaultOfLengthThree() throws Exception {
         final Options options = new Options();
         Option opt = OptionBuilder.hasArg().create("q");
         options.addOption(opt);
@@ -487,8 +480,12 @@ public class step6 {
         assertEquals("foo", cmd.getOptionValue(opt, "123"));
     }
 
+    /**
+     * related test case:
+     * @throws Exception
+     */
     @Test
-    public void testCapability1b35() throws Exception {
+    public void getOptionValueWithValidOptionObjectAndNullDefault() throws Exception {
         final Options options = new Options();
         Option opt = OptionBuilder.hasArg().create("s");
         options.addOption(opt);
@@ -499,8 +496,12 @@ public class step6 {
         assertEquals("foo", cmd.getOptionValue(opt, null));
     }
 
+    /**
+     * related test case:
+     * @throws Exception
+     */
     @Test
-    public void testCapability1b36() throws Exception {
+    public void getOptionValueWithValidOptionObjectAndEmptyDefault() throws Exception {
         final Options options = new Options();
         Option opt = OptionBuilder.hasArg().create("a");
         options.addOption(opt);
@@ -510,8 +511,12 @@ public class step6 {
         assertEquals("foo", cmd.getOptionValue(opt, ""));
     }
 
+    /**
+     * related test case:
+     * @throws Exception
+     */
     @Test
-    public void testCapability1b37() throws Exception {
+    public void getOptionValueWithValidOptionObjectAndDefaultOfLengthOne() throws Exception {
         final Options options = new Options();
         Option opt = OptionBuilder.hasArg().create("z");
         options.addOption(opt);
