@@ -153,6 +153,20 @@ public class Step3Test {
         //		it will not add an empty string into the option properties as "-D" is followed by nothing
         assertEquals(Collections.emptyMap(),  propsShortOpt );
     }
+
+    @Test
+    public void getOptionPropertiesWithValidOptionAndLongOptNameReturnsValue() throws Exception {
+    	options.addOption(validOptionWithPropertiesOfOpt);
+        options.addOption(validOptionWithPropertiesOfLongOpt);
+        final CommandLine cl = parser.parse(options, argsSinglePropertyWithLongOpt);
+        //
+        final Properties propsLongOpt = cl.getOptionProperties(validOptionWithPropertiesOfLongOpt);
+        // args without the first arg will not be added as option properties 
+        //	Ex) if our opt Name is -D and one of the args is ONLY "-D" instead of "-Dkey1=key2", 
+        //		it will not add an empty string into the option properties as "-D" is followed by nothing
+        assertEquals("ThisIsValue", propsLongOpt.getProperty("keyThisIsKey"));
+
+    }
     
     
     @Test
@@ -226,6 +240,8 @@ public class Step3Test {
     //	Testing Invalid Option that cannot be applied to the Arg list 
     //		This means that the Option CAN BE created but does not apply to the Arg List
     
+    
+    
     /*
     @Test
     public void getOptionPropertiesWithInvalidOption() throws Exception {
@@ -267,16 +283,16 @@ public class Step3Test {
     }
     
     @Test
-    public void getOptionPropertiesWithValidOptionContainingShortOptNameAndElementInArgsHasOneArgumentsReturnsEmptyMap() throws Exception {
+    public void getOptionPropertiesWithInvalidOptionContainingShortOptNameAndElementInArgsHasOneArgumentsReturnsEmptyMap() throws Exception {
     	options.addOption(validOptionWithPropertiesOfOpt);
         options.addOption(validOptionWithPropertiesOfLongOpt);
         final CommandLine cl = parser.parse(options, argsSinglePropertyWithArgs);
         //
-        final Option invalidOptionWithLongOpt = 
+        final Option invalidOptionWithShortOpt = 
         		OptionBuilder.withValueSeparator()
-	    			.hasArgs(2).withLongOpt("veryLongOptName")
-	    			.create(); 
-        final Properties propsLongOpt = cl.getOptionProperties(invalidOptionWithLongOpt);
+	    			.hasOptionalArgs(2)
+	    			.create('Y'); 
+        final Properties propsLongOpt = cl.getOptionProperties(invalidOptionWithShortOpt);
         //
         assertEquals(Collections.emptyMap(),propsLongOpt);
     }
@@ -297,6 +313,23 @@ public class Step3Test {
         //		it will not add an empty string into the option properties as "-D" is followed by nothing
         assertEquals(Collections.emptyMap(),  propsShortOpt );
     } 
+
+    @Test
+    public void getOptionPropertiesWithInValidOptionAndLongOptNameReturnsEmptyMap() throws Exception {
+    	options.addOption(validOptionWithPropertiesOfOpt);
+        options.addOption(validOptionWithPropertiesOfLongOpt);
+        final CommandLine cl = parser.parse(options, argsSinglePropertyWithLongOpt);
+        //
+        final Option invalidOptionWithLongOpt = 
+        		OptionBuilder.withValueSeparator()
+	    			.hasArgs(2).withLongOpt("longOptName")
+	    			.create(); 
+        final Properties propsLongOpt = cl.getOptionProperties(invalidOptionWithLongOpt);
+        // args without the first arg will not be added as option properties 
+        //	Ex) if our opt Name is -D and one of the args is ONLY "-D" instead of "-Dkey1=key2", 
+        //		it will not add an empty string into the option properties as "-D" is followed by nothing
+        assertEquals(Collections.emptyMap(),  propsLongOpt );
+    }
     
     
     @Test
@@ -426,6 +459,172 @@ public class Step3Test {
         assertEquals(false, cl.hasOption(invalidOptionWithNotExistingValue));
     }
     */
+    
+    
+    
+    
+    
+    
+    //	Testing Invalid Option that can be created but conflicts with input space constraints
+    //		This means that the Option CAN BE created violates input space constraints 
+    //		but does not apply to the Arg List
+    
+    
+   
+    @Test
+    public void getOptionPropertiesWithFaultyOptionContainingShortOptNameAndElementInArgsHasTwoArgumentsReturnsEmptyMap() throws Exception {
+    	options.addOption(validOptionWithPropertiesOfOpt);
+        options.addOption(validOptionWithPropertiesOfLongOpt);
+        final CommandLine cl = parser.parse(options, new String[] {"power"});
+        //
+        final Option faultyOptionWithShortOpt = 
+        		OptionBuilder.withValueSeparator()
+        			.hasOptionalArgs(2)
+        			.create("321");
+        final Properties propsShortOpt = cl.getOptionProperties(faultyOptionWithShortOpt);
+        //
+        assertEquals(Collections.emptyMap(),propsShortOpt);
+    }
+    
+    
+     
+    @Test
+    public void getOptionPropertiesWithFaultyOptionContainingShortOptNameAndElementInArgsHasOneArgumentsReturnsEmptyMap() throws Exception {
+    	options.addOption(validOptionWithPropertiesOfOpt);
+        options.addOption(validOptionWithPropertiesOfLongOpt);
+        final CommandLine cl = parser.parse(options, argsSinglePropertyWithArgs);
+        //
+        final Option faultyOptionWithShortOpt = 
+        		OptionBuilder.withValueSeparator()
+	    			.hasOptionalArgs(2)
+	    			.create("321"); 
+        final Properties propsLongOpt = cl.getOptionProperties(faultyOptionWithShortOpt);
+        //
+        assertEquals(Collections.emptyMap(),propsLongOpt);
+    }
+    
+    @Test
+    public void getOptionPropertiesWithFaultyOptionAndOnlyShortOptNameReturnsEmptyMap() throws Exception {
+    	options.addOption(validOptionWithPropertiesOfOpt);
+        options.addOption(validOptionWithPropertiesOfLongOpt);
+        final CommandLine cl = parser.parse(options, argsSinglePropertyWithOnlyOptName);
+        //
+        final Option faultyOptionWithShortOpt = 
+        		OptionBuilder.withValueSeparator()
+        			.hasOptionalArgs(2)
+        			.create("321");
+        final Properties propsShortOpt = cl.getOptionProperties(faultyOptionWithShortOpt);
+        // args without the first arg will not be added as option properties 
+        //	Ex) if our opt Name is -D and one of the args is ONLY "-D" instead of "-Dkey1=key2", 
+        //		it will not add an empty string into the option properties as "-D" is followed by nothing
+        assertEquals(Collections.emptyMap(),  propsShortOpt );
+    } 
+    
+    @Test
+    public void getOptionPropertiesWithFaultyOptionAndLongOptNameReturnsEmptyMap() throws Exception {
+    	options.addOption(validOptionWithPropertiesOfOpt);
+        options.addOption(validOptionWithPropertiesOfLongOpt);
+        final CommandLine cl = parser.parse(options, argsSinglePropertyWithLongOpt);
+        //
+        final Option faultyOptionWithLongOpt = 
+        		OptionBuilder.withValueSeparator()
+	    			.hasArgs(2).withLongOpt("")
+	    			.create(); 
+        final Properties propsLongOpt = cl.getOptionProperties(faultyOptionWithLongOpt);
+        // args without the first arg will not be added as option properties 
+        //	Ex) if our opt Name is -D and one of the args is ONLY "-D" instead of "-Dkey1=key2", 
+        //		it will not add an empty string into the option properties as "-D" is followed by nothing
+        assertEquals(Collections.emptyMap(),  propsLongOpt );
+    }
+    
+    @Test
+    public void getOptionValueWithFaultyOptionWithIntValueReturnsNull() throws Exception {
+    	options.addOption(validOptionWithKeyKV1);
+        options.addOption(validOptionWithKeyKV2);
+        final CommandLine cl = parser.parse(options, argsSingleIntValue);
+        //
+        final Option faultyOptionWithNotExistingValue = 
+        		Option.builder("").hasArg().type(Integer.class).build();
+        //
+        assertNull(cl.getOptionValue(faultyOptionWithNotExistingValue));
+    }
+    
+    @Test
+    public void getOptionValueWithFaultyOptionWithStringValueReturnsNull() throws Exception {
+    	options.addOption(validOptionWithKeyKV1);
+        options.addOption(validOptionWithKeyKV2);
+        final CommandLine cl = parser.parse(options, argsSingleStringValue);
+        //
+        final Option faultyOptionWithNotExistingValue = 
+        		Option.builder("").hasArg().type(String.class).build();
+        //
+        assertNull(cl.getOptionValue(faultyOptionWithNotExistingValue));
+    }
+    
+ 
+    
+    
+    
+    
+    @Test
+    public void getOptionValuesWithFaultyOptionWithIntValueReturnNull() throws Exception {
+    	options.addOption(validOptionWithKeyKV1);
+        options.addOption(validOptionWithKeyKV2);
+        final CommandLine cl = parser.parse(options, argsSingleIntValue);
+        //
+        final Option faultyOptionWithNotExistingValue = 
+        		Option.builder("").hasArg().type(Integer.class).build();
+        assertNull(cl.getOptionValues(faultyOptionWithNotExistingValue));
+    }
+    
+    
+    @Test
+    public void getOptionValuesWithFaultyOptionWithStringValReturnNull() throws Exception {
+    	options.addOption(validOptionWithKeyKV1);
+        options.addOption(validOptionWithKeyKV2);
+        final CommandLine cl = parser.parse(options, argsSingleStringValue);
+        //
+        //
+        final Option faultyOptionWithNotExistingValue = 
+        		Option.builder("").hasArg().type(String.class).build();
+        assertNull(cl.getOptionValues(faultyOptionWithNotExistingValue));
+    }
+ 
+    
+    
+    @Test
+    public void getParsedOptionValueWithFaultyOptionWithIntValReturnNull() throws Exception {
+    	options.addOption(validOptionWithKeyKV1);
+        options.addOption(validOptionWithKeyKV2);
+        final CommandLine cl = parser.parse(options, argsSingleIntValue);
+        //
+        final Option faultyOptionWithNotExistingValue = 
+        		Option.builder("").hasArg().type(Integer.class).build();
+        assertNull(cl.getParsedOptionValue(faultyOptionWithNotExistingValue));
+    }
+    
+    @Test
+    public void getParsedOptionValueWithFaultyOptionWithStringValReturnNull() throws Exception {
+    	options.addOption(validOptionWithKeyKV1);
+        options.addOption(validOptionWithKeyKV2);
+        final CommandLine cl = parser.parse(options, argsSingleStringValue);
+        //
+        final Option faultyOptionWithNotExistingValue = 
+        		Option.builder("").hasArg().type(String.class).build();
+        assertNull(cl.getParsedOptionValue(faultyOptionWithNotExistingValue));
+    }
+    
+    @Test
+    public void hasFaultyOptionReturnsFalse() throws Exception {
+    	options.addOption(validOptionWithKeyKV1);
+        options.addOption(validOptionWithKeyKV2);
+        final CommandLine cl = parser.parse(options, argsValue);
+        final Option faultyOptionWithNotExistingValue = 
+        		Option.builder("").hasArg().type(String.class).build();
+        assertEquals(false, cl.hasOption(faultyOptionWithNotExistingValue));
+    }
+    
+    
 
     
 }
