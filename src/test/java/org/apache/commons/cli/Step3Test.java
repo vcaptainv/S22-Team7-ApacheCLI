@@ -98,6 +98,8 @@ public class Step3Test {
     	options.addOption(validOptionWithKeyKV1);
         options.addOption(validOptionWithKeyKV2);
         final CommandLine cl = parser.parse(options, argsValue);
+        System.out.println("getOptionValuesNullOption");
+        System.out.println(Arrays.toString(cl.getOptionValues(nullOption)));
         assertNull(cl.getOptionValues(nullOption));
     }
     
@@ -108,7 +110,11 @@ public class Step3Test {
         final CommandLine cl = parser.parse(options, argsValue);
         assertNull(cl.getParsedOptionValue(nullOption));
     }
-    
+    /*
+     * 
+     * Test case 2.11
+     * 
+     */
     @Test
     public void hasNullOptionReturnsFalse() throws Exception {
     	options.addOption(validOptionWithKeyKV1);
@@ -227,12 +233,18 @@ public class Step3Test {
         //
         assertEquals("foobar", cl.getParsedOptionValue(validOptionWithKeyKV2));
     }
-    
+    /*
+     * 
+     * Test case 2.14
+     * 
+     */
     @Test
     public void hasValidOptionReturnsTrue() throws Exception {
     	options.addOption(validOptionWithKeyKV1);
         options.addOption(validOptionWithKeyKV2);
         final CommandLine cl = parser.parse(options, argsValue);
+        System.out.println("hasValidOptionReturnsTrue");
+        System.out.println(cl.hasOption(validOptionWithKeyKV1));
         assertEquals(true, cl.hasOption(validOptionWithKeyKV1));
     }
 	
@@ -383,6 +395,8 @@ public class Step3Test {
         //
         final Option invalidOptionWithNotExistingValue = 
         		Option.builder("kvNotExist").hasArg().type(Integer.class).build();
+        System.out.println("getOptionValuesInvalidOptionIntValue");
+        System.out.println(Arrays.toString(cl.getOptionValues(invalidOptionWithNotExistingValue)));
         assertNull(cl.getOptionValues(invalidOptionWithNotExistingValue));
     }
     
@@ -396,6 +410,8 @@ public class Step3Test {
         //
         final Option invalidOptionWithNotExistingValue = 
         		Option.builder("kvNotExist").hasArg().type(String.class).build();
+        System.out.println("getOptionValuesInvalidOptionStringValue");
+        System.out.println(Arrays.toString(cl.getOptionValues(invalidOptionWithNotExistingValue)));
         assertNull(cl.getOptionValues(invalidOptionWithNotExistingValue));
     }
  
@@ -423,6 +439,11 @@ public class Step3Test {
         assertNull(cl.getParsedOptionValue(invalidOptionWithNotExistingValue));
     }
     
+    /*
+     * 
+     * Test case 2.12
+     * 
+     */
     @Test
     public void hasInvalidOptionReturnsFalse() throws Exception {
     	options.addOption(validOptionWithKeyKV1);
@@ -574,6 +595,8 @@ public class Step3Test {
         //
         final Option faultyOptionWithNotExistingValue = 
         		Option.builder("").hasArg().type(Integer.class).build();
+        System.out.println("getOptionValuesFaultyOptionIntValue");
+        System.out.println(Arrays.toString(cl.getOptionValues(faultyOptionWithNotExistingValue)));
         assertNull(cl.getOptionValues(faultyOptionWithNotExistingValue));
     }
     
@@ -587,6 +610,8 @@ public class Step3Test {
         //
         final Option faultyOptionWithNotExistingValue = 
         		Option.builder("").hasArg().type(String.class).build();
+        System.out.println("getOptionValuesFaultyOptionStringValue");
+        System.out.println(Arrays.toString(cl.getOptionValues(faultyOptionWithNotExistingValue)));
         assertNull(cl.getOptionValues(faultyOptionWithNotExistingValue));
     }
  
@@ -613,7 +638,11 @@ public class Step3Test {
         		Option.builder("").hasArg().type(String.class).build();
         assertNull(cl.getParsedOptionValue(faultyOptionWithNotExistingValue));
     }
-    
+    /*
+     * 
+     * Test case 2.13
+     * 
+     */
     @Test
     public void hasFaultyOptionReturnsFalse() throws Exception {
     	options.addOption(validOptionWithKeyKV1);
