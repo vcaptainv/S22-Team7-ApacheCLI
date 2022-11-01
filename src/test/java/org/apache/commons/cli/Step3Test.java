@@ -41,9 +41,16 @@ public class Step3Test {
 	//
 	final String[] argsProperty = {"-Xkey1=value1", "-Xkey2=value2", "-Xkey3", "-Xkey4=value4", "-X", "--property", "keyThisIsKey=ThisIsValue"};
 	final String[] argsValue = {"-kv1", "321321", "-kv2", "foobar"};
-	
+	//
+	final String[] argsSinglePropertyWithArgs = {"-Xkey1=value1"};
+	final String[] argsSinglePropertyOneArg = {"-Xkey3"};
+	final String[] argsSinglePropertyWithOnlyOptName = {"-X"};
+	final String[] argsSinglePropertyWithLongOpt = {"--property", "keyThisIsKey=ThisIsValue"};
+	final String[] argsSingleIntValue = {"-kv1", "321321"};
+	final String[] argsSingleStringValue = {"-kv2", "foobar"};
+	//	
 	final Option nullOption = (Option) null;
-	//	These are options with properties and the Option has a short name. Ex) -D
+	//	These are options with properties and the Option has a short name. Ex) -X
     final Option validOptionWithPropertiesOfOpt = 
     		OptionBuilder.withValueSeparator()
     			.hasOptionalArgs(2)
@@ -113,56 +120,97 @@ public class Step3Test {
     //	Testing Valid Option
     
     @Test
-    public void getOptionPropertiesWithValidOption() throws Exception {
+    public void getOptionPropertiesWithValidOptionContainingShortOptNameAndElementInArgsHasTwoArgumentsReturnsValue() throws Exception {
     	options.addOption(validOptionWithPropertiesOfOpt);
         options.addOption(validOptionWithPropertiesOfLongOpt);
-        final CommandLine cl = parser.parse(options, argsProperty);
+        final CommandLine cl = parser.parse(options, argsSinglePropertyWithArgs);
         //
         final Properties propsShortOpt = cl.getOptionProperties(validOptionWithPropertiesOfOpt);
-        final Properties propsLongOpt = cl.getOptionProperties(validOptionWithPropertiesOfLongOpt);
         //
-        assertNotNull(propsShortOpt);
-        assertNotNull(propsLongOpt);
-        assertEquals( 4, propsShortOpt.size());
         assertEquals("value1", propsShortOpt.getProperty("key1"));
-        assertEquals( "value2", propsShortOpt.getProperty("key2"));
-        assertEquals( "true", propsShortOpt.getProperty("key3"));
-        assertEquals( "value4", propsShortOpt.getProperty("key4"));
-        //
-        assertEquals("ThisIsValue", propsLongOpt.getProperty("keyThisIsKey"));
     }
     
     @Test
-    public void getOptionValueWithValidOption() throws Exception {
+    public void getOptionPropertiesWithValidOptionContainingShortOptNameAndElementInArgsHasOneArgumentsReturnsValue() throws Exception {
+    	options.addOption(validOptionWithPropertiesOfOpt);
+        options.addOption(validOptionWithPropertiesOfLongOpt);
+        final CommandLine cl = parser.parse(options, argsSinglePropertyOneArg);
+        //
+        final Properties propsShortOpt = cl.getOptionProperties(validOptionWithPropertiesOfOpt);
+        //
+        assertEquals("true", propsShortOpt.getProperty("key3"));
+    }
+    
+    @Test
+    public void getOptionPropertiesWithValidOptionAndOnlyShortOptNameReturnsEmptyMap() throws Exception {
+    	options.addOption(validOptionWithPropertiesOfOpt);
+        options.addOption(validOptionWithPropertiesOfLongOpt);
+        final CommandLine cl = parser.parse(options, argsSinglePropertyWithOnlyOptName);
+        //
+        final Properties propsShortOpt = cl.getOptionProperties(validOptionWithPropertiesOfOpt);
+        // args without the first arg will not be added as option properties 
+        //	Ex) if our opt Name is -D and one of the args is ONLY "-D" instead of "-Dkey1=key2", 
+        //		it will not add an empty string into the option properties as "-D" is followed by nothing
+        assertEquals(Collections.emptyMap(),  propsShortOpt );
+    }
+    
+    
+    @Test
+    public void getOptionValueWithValidOptionWithIntValueReturnsValue() throws Exception {
     	options.addOption(validOptionWithKeyKV1);
         options.addOption(validOptionWithKeyKV2);
-        final CommandLine cl = parser.parse(options, argsValue);
+        final CommandLine cl = parser.parse(options, argsSingleIntValue);
         //
         assertEquals("321321", cl.getOptionValue(validOptionWithKeyKV1));
+    }
+    
+    @Test
+    public void getOptionValueWithValidOptionWithStringValueReturnsValue() throws Exception {
+    	options.addOption(validOptionWithKeyKV1);
+        options.addOption(validOptionWithKeyKV2);
+        final CommandLine cl = parser.parse(options, argsSingleStringValue);
+        //
         assertEquals("foobar", cl.getOptionValue(validOptionWithKeyKV2));
     }
     
     @Test
-    public void getOptionValuesWithValidOption() throws Exception {
+    public void getOptionValuesWithValidOptionWithIntValueReturnsValue() throws Exception {
     	options.addOption(validOptionWithKeyKV1);
         options.addOption(validOptionWithKeyKV2);
-        final CommandLine cl = parser.parse(options, argsValue);
+        final CommandLine cl = parser.parse(options, argsSingleIntValue);
         //
         //	intArray is the corresponding Option Value with the key "kv1"
         final String[] intArray = new String[]{"321321"};
+        assertArrayEquals(intArray, cl.getOptionValues(validOptionWithKeyKV1));
+    }
+    
+    
+    @Test
+    public void getOptionValuesWithValidOptionWithStringValReturnsValue() throws Exception {
+    	options.addOption(validOptionWithKeyKV1);
+        options.addOption(validOptionWithKeyKV2);
+        final CommandLine cl = parser.parse(options, argsSingleStringValue);
+        //
         //	stringArrayy is the corresponding Option Value with the key "kv2"
         final String[] stringArray = new String[]{"foobar"};
-        assertArrayEquals(intArray, cl.getOptionValues(validOptionWithKeyKV1));
         assertArrayEquals(stringArray, cl.getOptionValues(validOptionWithKeyKV2));
     }
     
     @Test
-    public void getParsedOptionValueWithValidOption() throws Exception {
+    public void getParsedOptionValueWithValidOptionWithIntValReturnsValue() throws Exception {
     	options.addOption(validOptionWithKeyKV1);
         options.addOption(validOptionWithKeyKV2);
-        final CommandLine cl = parser.parse(options, argsValue);
+        final CommandLine cl = parser.parse(options, argsSingleIntValue);
         //
         assertEquals(321321, ((Number) cl.getParsedOptionValue(validOptionWithKeyKV1)).intValue());
+    }
+    
+    @Test
+    public void getParsedOptionValueWithValidOptionWithStringValReturnsValue() throws Exception {
+    	options.addOption(validOptionWithKeyKV1);
+        options.addOption(validOptionWithKeyKV2);
+        final CommandLine cl = parser.parse(options, argsSingleStringValue);
+        //
         assertEquals("foobar", cl.getParsedOptionValue(validOptionWithKeyKV2));
     }
     
@@ -175,8 +223,10 @@ public class Step3Test {
     }
 	
     
-    //	Testing Invalid Option
+    //	Testing Invalid Option that cannot be applied to the Arg list 
+    //		This means that the Option CAN BE created but does not apply to the Arg List
     
+    /*
     @Test
     public void getOptionPropertiesWithInvalidOption() throws Exception {
     	options.addOption(validOptionWithPropertiesOfOpt);
@@ -197,12 +247,75 @@ public class Step3Test {
         assertEquals(Collections.emptyMap(),propsShortOpt);
         assertEquals(Collections.emptyMap(),propsLongOpt);
     }
+    */
+    
+    
     
     @Test
-    public void getOptionValueWithInvalidOption() throws Exception {
+    public void getOptionPropertiesWithInvalidOptionContainingShortOptNameAndElementInArgsHasTwoArgumentsReturnsEmptyMap() throws Exception {
+    	options.addOption(validOptionWithPropertiesOfOpt);
+        options.addOption(validOptionWithPropertiesOfLongOpt);
+        final CommandLine cl = parser.parse(options, argsSinglePropertyWithArgs);
+        //
+        final Option invalidOptionWithShortOpt = 
+        		OptionBuilder.withValueSeparator()
+        			.hasOptionalArgs(2)
+        			.create('Y');
+        final Properties propsShortOpt = cl.getOptionProperties(invalidOptionWithShortOpt);
+        //
+        assertEquals(Collections.emptyMap(),propsShortOpt);
+    }
+    
+    @Test
+    public void getOptionPropertiesWithValidOptionContainingShortOptNameAndElementInArgsHasOneArgumentsReturnsEmptyMap() throws Exception {
+    	options.addOption(validOptionWithPropertiesOfOpt);
+        options.addOption(validOptionWithPropertiesOfLongOpt);
+        final CommandLine cl = parser.parse(options, argsSinglePropertyWithArgs);
+        //
+        final Option invalidOptionWithLongOpt = 
+        		OptionBuilder.withValueSeparator()
+	    			.hasArgs(2).withLongOpt("veryLongOptName")
+	    			.create(); 
+        final Properties propsLongOpt = cl.getOptionProperties(invalidOptionWithLongOpt);
+        //
+        assertEquals(Collections.emptyMap(),propsLongOpt);
+    }
+    
+    @Test
+    public void getOptionPropertiesWithInvalidOptionAndOnlyShortOptNameReturnsEmptyMap() throws Exception {
+    	options.addOption(validOptionWithPropertiesOfOpt);
+        options.addOption(validOptionWithPropertiesOfLongOpt);
+        final CommandLine cl = parser.parse(options, argsSinglePropertyWithOnlyOptName);
+        //
+        final Option invalidOptionWithShortOpt = 
+        		OptionBuilder.withValueSeparator()
+        			.hasOptionalArgs(2)
+        			.create('Y');
+        final Properties propsShortOpt = cl.getOptionProperties(invalidOptionWithShortOpt);
+        // args without the first arg will not be added as option properties 
+        //	Ex) if our opt Name is -D and one of the args is ONLY "-D" instead of "-Dkey1=key2", 
+        //		it will not add an empty string into the option properties as "-D" is followed by nothing
+        assertEquals(Collections.emptyMap(),  propsShortOpt );
+    } 
+    
+    
+    @Test
+    public void getOptionValueWithInvalidOptionWithIntValueReturnsNull() throws Exception {
     	options.addOption(validOptionWithKeyKV1);
         options.addOption(validOptionWithKeyKV2);
-        final CommandLine cl = parser.parse(options, argsValue);
+        final CommandLine cl = parser.parse(options, argsSingleIntValue);
+        //
+        final Option invalidOptionWithNotExistingValue = 
+        		Option.builder("kvNotExist").hasArg().type(Integer.class).build();
+        //
+        assertNull(cl.getOptionValue(invalidOptionWithNotExistingValue));
+    }
+    
+    @Test
+    public void getOptionValueWithInvalidOptionWithStringValueReturnsNull() throws Exception {
+    	options.addOption(validOptionWithKeyKV1);
+        options.addOption(validOptionWithKeyKV2);
+        final CommandLine cl = parser.parse(options, argsSingleStringValue);
         //
         final Option invalidOptionWithNotExistingValue = 
         		Option.builder("kvNotExist").hasArg().type(String.class).build();
@@ -210,6 +323,8 @@ public class Step3Test {
         assertNull(cl.getOptionValue(invalidOptionWithNotExistingValue));
     }
     
+    
+    /*
     @Test
     public void getOptionValuesWithInvalidOption() throws Exception {
     	options.addOption(validOptionWithKeyKV1);
@@ -221,7 +336,72 @@ public class Step3Test {
         //
         assertNull(cl.getOptionValues(invalidOptionWithNotExistingValue));
     }
+    */
+ 
     
+    
+    
+    
+    @Test
+    public void getOptionValuesWithInvalidOptionWithIntValueReturnNull() throws Exception {
+    	options.addOption(validOptionWithKeyKV1);
+        options.addOption(validOptionWithKeyKV2);
+        final CommandLine cl = parser.parse(options, argsSingleIntValue);
+        //
+        final Option invalidOptionWithNotExistingValue = 
+        		Option.builder("kvNotExist").hasArg().type(Integer.class).build();
+        assertNull(cl.getOptionValues(invalidOptionWithNotExistingValue));
+    }
+    
+    
+    @Test
+    public void getOptionValuesWithInValidOptionWithStringValReturnNull() throws Exception {
+    	options.addOption(validOptionWithKeyKV1);
+        options.addOption(validOptionWithKeyKV2);
+        final CommandLine cl = parser.parse(options, argsSingleStringValue);
+        //
+        //
+        final Option invalidOptionWithNotExistingValue = 
+        		Option.builder("kvNotExist").hasArg().type(String.class).build();
+        assertNull(cl.getOptionValues(invalidOptionWithNotExistingValue));
+    }
+ 
+    
+    
+    @Test
+    public void getParsedOptionValueWithInvalidOptionWithIntValReturnNull() throws Exception {
+    	options.addOption(validOptionWithKeyKV1);
+        options.addOption(validOptionWithKeyKV2);
+        final CommandLine cl = parser.parse(options, argsSingleIntValue);
+        //
+        final Option invalidOptionWithNotExistingValue = 
+        		Option.builder("kvNotExist").hasArg().type(Integer.class).build();
+        assertNull(cl.getParsedOptionValue(invalidOptionWithNotExistingValue));
+    }
+    
+    @Test
+    public void getParsedOptionValueWithInvalidOptionWithStringValReturnNull() throws Exception {
+    	options.addOption(validOptionWithKeyKV1);
+        options.addOption(validOptionWithKeyKV2);
+        final CommandLine cl = parser.parse(options, argsSingleStringValue);
+        //
+        final Option invalidOptionWithNotExistingValue = 
+        		Option.builder("kvNotExist").hasArg().type(String.class).build();
+        assertNull(cl.getParsedOptionValue(invalidOptionWithNotExistingValue));
+    }
+    
+    @Test
+    public void hasInvalidOptionReturnsFalse() throws Exception {
+    	options.addOption(validOptionWithKeyKV1);
+        options.addOption(validOptionWithKeyKV2);
+        final CommandLine cl = parser.parse(options, argsValue);
+        final Option invalidOptionWithNotExistingValue = 
+        		Option.builder("kvNotExist").hasArg().type(String.class).build();
+        assertEquals(false, cl.hasOption(invalidOptionWithNotExistingValue));
+    }
+    
+   
+    /*
     @Test
     public void getParsedOptionValueWithInvalidOption() throws Exception {
     	options.addOption(validOptionWithKeyKV1);
@@ -245,7 +425,7 @@ public class Step3Test {
         //
         assertEquals(false, cl.hasOption(invalidOptionWithNotExistingValue));
     }
-    
+    */
 
     
 }
