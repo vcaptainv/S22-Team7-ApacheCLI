@@ -10,12 +10,12 @@ import java.util.Properties;
 import org.junit.Test;
 
 /**
- * Capability 5
+ * Capability 6
  * builder() in CommandLineBuilder
  */
 
 @SuppressWarnings("deprecation") // tests some deprecated classes
-public class capability6Test {
+public class Step5Test {
     /**
      * related test case:6.1
      */

@@ -16,7 +16,7 @@ import org.junit.Test;
  * addOption(Option option)
  * addArg(string arg)
  */
-public class capability5Test {
+public class Step4Test {
     /**
      * related test case:5.a.1
      */
@@ -42,21 +42,6 @@ public class capability5Test {
 
     /**
      * related test case: 5.a.3
-     * Unable to run
-     * Throw runtime Error
-     */
-    // @Test
-    // public void testAddLongNullOptionToOptions() {
-    // final CommandLine cmd = new CommandLine();
-    // assertNotNull(cmd.getOptions());
-    // assertEquals(0, cmd.getOptions().length);
-
-    // cmd.addOption(OptionBuilder.hasOptionalArg().withLongOpt("").create());
-    // assertEquals(1, cmd.getOptions().length);
-    // }
-
-    /**
-     * related test case: 5.a.4
      */
     @Test
     public void testAddVaidShortOptionToOptions() {
@@ -67,18 +52,7 @@ public class capability5Test {
     }
 
     /**
-     * related test case: 5.a.5
-     */
-    @Test
-    public void testAddVaidLongOptionToOptions() {
-        final CommandLine cmd = new CommandLine();
-        cmd.addOption((OptionBuilder.hasOptionalArg().withLongOpt("abc").create()));
-        assertEquals(1, cmd.getOptions().length);
-        assertEquals("abc", cmd.getOptions()[0].getLongOpt());
-    }
-
-    /**
-     * related test case: 5.a.6
+     * related test case: 5.a.4
      */
 
     @Test
@@ -90,18 +64,7 @@ public class capability5Test {
     }
 
     /**
-     * related test case: 5.a.7
-     */
-    @Test
-    public void testAddFaultyNumbericLongOptionToOptions() {
-        final CommandLine cmd = new CommandLine();
-        cmd.addOption(OptionBuilder.hasOptionalArg().withLongOpt("123").create());
-        assertEquals(1, cmd.getOptions().length);
-        assertEquals("123", cmd.getOptions()[0].getLongOpt());
-    }
-
-    /**
-     * related test case: 5.a.8
+     * related test case: 5.a.5
      * Unable to run
      * Throw Invalid Option name error
      */
@@ -114,50 +77,14 @@ public class capability5Test {
     // }
 
     /**
-     * related test case: 5.a.9
-     */
-    @Test
-    public void testAddFaultySymbolLongOptionToOptions() {
-        final CommandLine cmd = new CommandLine();
-        cmd.addOption(OptionBuilder.hasOptionalArg().withLongOpt("%%%").create());
-        assertEquals(1, cmd.getOptions().length);
-        assertEquals("%%%", cmd.getOptions()[0].getLongOpt());
-    }
-
-    // /**
-    //  * related test case: 5.a.10
-    //  * Unable to run
-    //  * Throw IllegalArgumentException Error
-    //  */
-    // @Test
-    // public void testAddNullLongOptionToOptions() {
-    //     final CommandLine cmd = new CommandLine();
-    //     cmd.addOption(OptionBuilder.hasOptionalArg().withLongOpt(null).create());
-    //     assertEquals(1, cmd.getOptions().length);
-    //     assertNull(cmd.getOptions()[0].getLongOpt());
-    // }
-    
-
-    /**
-     * related test case: 5.a.11
+     * related test case: 5.a.6
      */
     @Test
     public void testAddInvalidShortOptionToOptions() {
         final CommandLine cmd = new CommandLine();
-        cmd.addOption(OptionBuilder.create("a"));
+        cmd.addOption(OptionBuilder.create("abc"));
         assertEquals(1, cmd.getOptions().length);
-        assertEquals("a", cmd.getOptions()[0].getOpt());
-    }
-
-    /**
-     * related test case: 5.a.12
-     */
-    @Test
-    public void testAddInvalidLongOptionToOptions() {
-        final CommandLine cmd = new CommandLine();
-        cmd.addOption(OptionBuilder.withLongOpt("abc").create());
-        assertEquals(1, cmd.getOptions().length);
-        assertEquals("abc", cmd.getOptions()[0].getLongOpt());
+        assertEquals("abc", cmd.getOptions()[0].getOpt());
     }
 
     /* -----------Seperation line for capability 5b -------------- */
