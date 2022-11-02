@@ -25,6 +25,7 @@ public class CommandLineCapabilityOneATest {
     }
 
     // @Test (expected = NullPointerException.class)
+    // // test case 1.a.1
     // public void testGetOptionPropertiesWithNullString() throws Exception {
     //     final Properties props = cl.getOptionProperties((String) null);
     //     assertNotNull("null properties", props);
@@ -32,6 +33,7 @@ public class CommandLineCapabilityOneATest {
     // }
 
     @Test
+    // test case 1.a.2
     public void testGetOptionPropertiesWithEmptyString() throws Exception {
         final Properties props = cl.getOptionProperties("");
         assertNotNull("null properties", props);
@@ -39,6 +41,7 @@ public class CommandLineCapabilityOneATest {
     }
 
     @Test
+    // test case 1.a.3
     public void testGetOptionPropertiesWithStringThatHasLengthOne() throws Exception {
         final Properties props = cl.getOptionProperties("D");
         assertNotNull("null properties", props);
@@ -50,6 +53,7 @@ public class CommandLineCapabilityOneATest {
     }
 
     @Test
+    // test case 1.a.4
     public void testGetOptionPropertiesWithStringThatHasLengthGreaterThanOne() throws Exception {
         final Properties props = cl.getOptionProperties("property");
         assertNotNull("null properties", props);

@@ -27,62 +27,62 @@ public class CommandLineCapabilityOneCTest {
     }
     
     @Test
+    // test case 1.c.1
     public void testGetParsedOptionValueWithLowerBoundaryOfLowerCaseChar() throws Exception {
-        // test case 1.c.1
         assertEquals("valuea", cmd.getParsedOptionValue('a'));
     }
 
     @Test
+    // test case 1.c.2
     public void testGetParsedOptionValueNominalLowerCaseChar() throws Exception {
-        // test case 1.c.2
         assertEquals("valuef", cmd.getParsedOptionValue('f'));
     }
 
     @Test
+    // test case 1.c.3
     public void testGetParsedOptionValueUpperBoundaryOfLowerCaseChar() throws Exception {
-        // test case 1.c.3
         assertEquals("valuez", cmd.getParsedOptionValue('z'));
     }
 
     @Test
+    // test case 1.c.4
     public void testGetParsedOptionValueWithLowerBoundaryOfUpperCaseChar() throws Exception {
-        // test case 1.c.4
         assertEquals("valueA", cmd.getParsedOptionValue('A'));
     }
 
     @Test
+    // test case 1.c.5
     public void testGetParsedOptionValueWithNominalUpperCaseChar() throws Exception {
-        // test case 1.c.5
         assertEquals("valueG", cmd.getParsedOptionValue('G'));
     }
 
     @Test
+    // test case 1.c.6
     public void testGetParsedOptionValueWithUpperBoundaryOfUpperCaseChar() throws Exception {
-        // test case 1.c.6
         assertEquals("valueZ", cmd.getParsedOptionValue('Z'));
     }
 
     // @Test (expected = NullPointerException.class)
+    // // test case 1.c.7
     // public void testGetParsedOptionValueWithNullString() throws Exception {
-    //     // test case 1.c.7
     //     assertEquals(null, cmd.getParsedOptionValue((String) null));
     // }
 
     @Test
+    // test case 1.c.8
     public void testGetParsedOptionValueWithEmptyString() throws Exception {
-        // test case 1.c.8
         assertEquals(null, cmd.getParsedOptionValue(""));
     }
 
     @Test
+    // test case 1.c.9
     public void testGetParsedOptionValueWithStringThatHasLengthOne() throws Exception {
-        // test case 1.c.9
         assertEquals(null, cmd.getParsedOptionValue("v"));
     }
 
     @Test
+    // test case 1.c.10
     public void testGetParsedOptionWithStringThatHasLengthLargerThanOne() throws Exception {
-        // test case 1.c.10
         assertEquals("valuetest", cmd.getParsedOptionValue("test"));
     }
 }

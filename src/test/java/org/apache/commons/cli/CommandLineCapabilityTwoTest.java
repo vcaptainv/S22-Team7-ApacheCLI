@@ -25,62 +25,62 @@ public class CommandLineCapabilityTwoTest {
     }
 
     @Test
+    // test case 2.1
     public void testHasOptionWithLowerBoundaryOfLowerCaseChar() throws Exception {
-        // test case 2.1
         assertEquals(true, cmd.hasOption('a'));
     }
 
     @Test
+    // test case 2.2
     public void testHasOptionWithNominalLowerCaseChar() throws Exception {
-        // test case 2.2
         assertEquals(false, cmd.hasOption('f'));
     }
 
     @Test
+    // test case 2.3
     public void testHasOptionWithUpperBoundaryOfLowerCaseChar() throws Exception {
-        // test case 2.3
         assertEquals(true, cmd.hasOption('z'));
     }
 
     @Test
+    // test case 2.4
     public void testHasOptionWithLowerBoundaryOfUpperCaseChar() throws Exception {
-        // test case 2.4
         assertEquals(false, cmd.hasOption('A'));
     }
 
     @Test
+    // test case 2.5
     public void testHasOptionWithNominalUpperCaseChar() throws Exception {
-        // test case 2.5
         assertEquals(true, cmd.hasOption('G'));
     }
 
     @Test
+    // test case 2.6
     public void testHasOptionWithUpperBoundaryOfUpperCaseChar() throws Exception {
-        // test case 2.6
         assertEquals(true, cmd.hasOption('Z'));
     }
 
     // @Test (expected = NullPointerException.class)
+    // // test case 2.7
     // public void testHasOptionWithNullString() throws Exception {
-    //     // test case 2.7
     //     assertEquals(false, cmd.hasOption((String) null));
     // }
 
     @Test
+    // test case 2.8
     public void testHasOptionWithEmptyString() throws Exception {
-        // test case 2.8
         assertEquals(false, cmd.hasOption(""));
     }
 
     @Test
+    // test case 2.9
     public void testHasOptionWithStringThatHasLengthOne() throws Exception {
-        // test case 2.9
         assertEquals(false, cmd.hasOption("v"));
     }
 
     @Test
+    // test case 2.10
     public void testHasOptionWithStringThatHasLengthLargerThanOne() throws Exception {
-        // test case 2.10
         assertEquals(true, cmd.hasOption("test"));
     }
 }
