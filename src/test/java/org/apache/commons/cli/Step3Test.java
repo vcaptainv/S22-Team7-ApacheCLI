@@ -33,6 +33,15 @@ import org.junit.Before;
 @SuppressWarnings("deprecation") // tests some deprecated classes
 public class Step3Test {
 
+    /**
+        Capability 1a: Test getOptionProperties(Option opt) 
+        Capability 1b: Test getOptionValue(Option opt) 
+        Capability 1b: Test getOptionValues(Option opt) 
+        Capability 1c: Test getParsedOptionValue(Option opt) 
+        Capability 2: Test hasOption(Option opt) 
+
+     */
+
 	//	Option rows 
 	Option case3b1;
 	CommandLine cl;
@@ -67,6 +76,7 @@ public class Step3Test {
     //
     Options options;
     Parser parser;
+
 	@Before
 	public void setup() throws Exception{
 		//
@@ -77,7 +87,8 @@ public class Step3Test {
 	
 	//	Testing with Null Option
 	
-    @Test
+    
+    @Test //  Test case  1.a.5
     public void getOptionPropertiesWithNullOptionResultsInEmptyMap() throws Exception {
     	options.addOption(validOptionWithPropertiesOfOpt);
         options.addOption(validOptionWithPropertiesOfLongOpt);
@@ -85,7 +96,7 @@ public class Step3Test {
         assertEquals(Collections.emptyMap(), cl.getOptionProperties(nullOption));
     }
     
-    @Test
+    @Test //  Test case  1.b.58
     public void getOptionValueWithNullOptionResultsInNull() throws Exception {
     	options.addOption(validOptionWithKeyKV1);
         options.addOption(validOptionWithKeyKV2);
@@ -93,7 +104,7 @@ public class Step3Test {
         assertNull(cl.getOptionValue(nullOption));
     }
     
-    @Test
+    @Test //  Test case  1.b.58
     public void getOptionValuesWithNullOptionResultsInNull() throws Exception {
     	options.addOption(validOptionWithKeyKV1);
         options.addOption(validOptionWithKeyKV2);
@@ -103,7 +114,7 @@ public class Step3Test {
         assertNull(cl.getOptionValues(nullOption));
     }
     
-    @Test
+    @Test //  Test case  1.c.1
     public void getParsedOptionValueWithNullOptionResultsInNull() throws Exception {
     	options.addOption(validOptionWithKeyKV1);
         options.addOption(validOptionWithKeyKV2);
@@ -125,7 +136,7 @@ public class Step3Test {
     
     //	Testing Valid Option
     
-    @Test
+    @Test //  Test case  1.a.6
     public void getOptionPropertiesWithValidOptionContainingShortOptNameAndElementInArgsHasTwoArgumentsReturnsValue() throws Exception {
     	options.addOption(validOptionWithPropertiesOfOpt);
         options.addOption(validOptionWithPropertiesOfLongOpt);
@@ -136,7 +147,7 @@ public class Step3Test {
         assertEquals("value1", propsShortOpt.getProperty("key1"));
     }
     
-    @Test
+    @Test //  Test case  1.a.7
     public void getOptionPropertiesWithValidOptionContainingShortOptNameAndElementInArgsHasOneArgumentsReturnsValue() throws Exception {
     	options.addOption(validOptionWithPropertiesOfOpt);
         options.addOption(validOptionWithPropertiesOfLongOpt);
@@ -147,7 +158,7 @@ public class Step3Test {
         assertEquals("true", propsShortOpt.getProperty("key3"));
     }
     
-    @Test
+    @Test //  Test case  1.a.8
     public void getOptionPropertiesWithValidOptionAndOnlyShortOptNameReturnsEmptyMap() throws Exception {
     	options.addOption(validOptionWithPropertiesOfOpt);
         options.addOption(validOptionWithPropertiesOfLongOpt);
@@ -160,7 +171,7 @@ public class Step3Test {
         assertEquals(Collections.emptyMap(),  propsShortOpt );
     }
 
-    @Test
+    @Test //  Test case  1.a.9
     public void getOptionPropertiesWithValidOptionAndLongOptNameReturnsValue() throws Exception {
     	options.addOption(validOptionWithPropertiesOfOpt);
         options.addOption(validOptionWithPropertiesOfLongOpt);
@@ -175,7 +186,7 @@ public class Step3Test {
     }
     
     
-    @Test
+    @Test //  Test case  1.b.63
     public void getOptionValueWithValidOptionWithIntValueReturnsValue() throws Exception {
     	options.addOption(validOptionWithKeyKV1);
         options.addOption(validOptionWithKeyKV2);
@@ -184,7 +195,7 @@ public class Step3Test {
         assertEquals("321321", cl.getOptionValue(validOptionWithKeyKV1));
     }
     
-    @Test
+    @Test //  Test case  1.b.63
     public void getOptionValueWithValidOptionWithStringValueReturnsValue() throws Exception {
     	options.addOption(validOptionWithKeyKV1);
         options.addOption(validOptionWithKeyKV2);
@@ -193,7 +204,7 @@ public class Step3Test {
         assertEquals("foobar", cl.getOptionValue(validOptionWithKeyKV2));
     }
     
-    @Test
+    @Test //  Test case  1.b.63
     public void getOptionValuesWithValidOptionWithIntValueReturnsValue() throws Exception {
     	options.addOption(validOptionWithKeyKV1);
         options.addOption(validOptionWithKeyKV2);
@@ -205,7 +216,7 @@ public class Step3Test {
     }
     
     
-    @Test
+    @Test //  Test case  1.b.63
     public void getOptionValuesWithValidOptionWithStringValReturnsValue() throws Exception {
     	options.addOption(validOptionWithKeyKV1);
         options.addOption(validOptionWithKeyKV2);
@@ -216,7 +227,7 @@ public class Step3Test {
         assertArrayEquals(stringArray, cl.getOptionValues(validOptionWithKeyKV2));
     }
     
-    @Test
+    @Test //  Test case  1.c.6
     public void getParsedOptionValueWithValidOptionWithIntValReturnsValue() throws Exception {
     	options.addOption(validOptionWithKeyKV1);
         options.addOption(validOptionWithKeyKV2);
@@ -225,7 +236,7 @@ public class Step3Test {
         assertEquals(321321, ((Number) cl.getParsedOptionValue(validOptionWithKeyKV1)).intValue());
     }
     
-    @Test
+    @Test //  Test case  1.c.7
     public void getParsedOptionValueWithValidOptionWithStringValReturnsValue() throws Exception {
     	options.addOption(validOptionWithKeyKV1);
         options.addOption(validOptionWithKeyKV2);
@@ -279,7 +290,7 @@ public class Step3Test {
     
     
     
-    @Test
+    @Test //  Test case  1.a.6
     public void getOptionPropertiesWithInvalidOptionContainingShortOptNameAndElementInArgsHasTwoArgumentsReturnsEmptyMap() throws Exception {
     	options.addOption(validOptionWithPropertiesOfOpt);
         options.addOption(validOptionWithPropertiesOfLongOpt);
@@ -294,7 +305,7 @@ public class Step3Test {
         assertEquals(Collections.emptyMap(),propsShortOpt);
     }
     
-    @Test
+    @Test //  Test case  1.a.7
     public void getOptionPropertiesWithInvalidOptionContainingShortOptNameAndElementInArgsHasOneArgumentsReturnsEmptyMap() throws Exception {
     	options.addOption(validOptionWithPropertiesOfOpt);
         options.addOption(validOptionWithPropertiesOfLongOpt);
@@ -309,7 +320,7 @@ public class Step3Test {
         assertEquals(Collections.emptyMap(),propsLongOpt);
     }
     
-    @Test
+    @Test //  Test case  1.a.8
     public void getOptionPropertiesWithInvalidOptionAndOnlyShortOptNameReturnsEmptyMap() throws Exception {
     	options.addOption(validOptionWithPropertiesOfOpt);
         options.addOption(validOptionWithPropertiesOfLongOpt);
@@ -326,7 +337,7 @@ public class Step3Test {
         assertEquals(Collections.emptyMap(),  propsShortOpt );
     } 
 
-    @Test
+    @Test //  Test case  1.a.9
     public void getOptionPropertiesWithInValidOptionAndLongOptNameReturnsEmptyMap() throws Exception {
     	options.addOption(validOptionWithPropertiesOfOpt);
         options.addOption(validOptionWithPropertiesOfLongOpt);
@@ -344,7 +355,7 @@ public class Step3Test {
     }
     
     
-    @Test
+    @Test //  Test case  1.b.59
     public void getOptionValueWithInvalidOptionWithIntValueReturnsNull() throws Exception {
     	options.addOption(validOptionWithKeyKV1);
         options.addOption(validOptionWithKeyKV2);
@@ -356,7 +367,7 @@ public class Step3Test {
         assertNull(cl.getOptionValue(invalidOptionWithNotExistingValue));
     }
     
-    @Test
+    @Test //  Test case  1.b.60
     public void getOptionValueWithInvalidOptionWithStringValueReturnsNull() throws Exception {
     	options.addOption(validOptionWithKeyKV1);
         options.addOption(validOptionWithKeyKV2);
@@ -387,7 +398,7 @@ public class Step3Test {
     
     
     
-    @Test
+    @Test //  Test case  1.b.59
     public void getOptionValuesWithInvalidOptionWithIntValueReturnNull() throws Exception {
     	options.addOption(validOptionWithKeyKV1);
         options.addOption(validOptionWithKeyKV2);
@@ -401,7 +412,7 @@ public class Step3Test {
     }
     
     
-    @Test
+    @Test //  Test case  1.b.60
     public void getOptionValuesWithInValidOptionWithStringValReturnNull() throws Exception {
     	options.addOption(validOptionWithKeyKV1);
         options.addOption(validOptionWithKeyKV2);
@@ -417,7 +428,7 @@ public class Step3Test {
  
     
     
-    @Test
+    @Test //  Test case  1.c.2
     public void getParsedOptionValueWithInvalidOptionWithIntValReturnNull() throws Exception {
     	options.addOption(validOptionWithKeyKV1);
         options.addOption(validOptionWithKeyKV2);
@@ -428,7 +439,7 @@ public class Step3Test {
         assertNull(cl.getParsedOptionValue(invalidOptionWithNotExistingValue));
     }
     
-    @Test
+    @Test //  Test case  1.c.3
     public void getParsedOptionValueWithInvalidOptionWithStringValReturnNull() throws Exception {
     	options.addOption(validOptionWithKeyKV1);
         options.addOption(validOptionWithKeyKV2);
@@ -491,8 +502,8 @@ public class Step3Test {
     //		but does not apply to the Arg List
     
     
-   
-    @Test
+    
+    @Test   //  Test case  1.a.10
     public void getOptionPropertiesWithFaultyOptionContainingShortOptNameAndElementInArgsHasTwoArgumentsReturnsEmptyMap() throws Exception {
     	options.addOption(validOptionWithPropertiesOfOpt);
         options.addOption(validOptionWithPropertiesOfLongOpt);
@@ -509,7 +520,7 @@ public class Step3Test {
     
     
      
-    @Test
+    @Test   //  Test case  1.a.11
     public void getOptionPropertiesWithFaultyOptionContainingShortOptNameAndElementInArgsHasOneArgumentsReturnsEmptyMap() throws Exception {
     	options.addOption(validOptionWithPropertiesOfOpt);
         options.addOption(validOptionWithPropertiesOfLongOpt);
@@ -524,7 +535,7 @@ public class Step3Test {
         assertEquals(Collections.emptyMap(),propsLongOpt);
     }
     
-    @Test
+    @Test   //  Test case  1.a.12
     public void getOptionPropertiesWithFaultyOptionAndOnlyShortOptNameReturnsEmptyMap() throws Exception {
     	options.addOption(validOptionWithPropertiesOfOpt);
         options.addOption(validOptionWithPropertiesOfLongOpt);
@@ -541,7 +552,7 @@ public class Step3Test {
         assertEquals(Collections.emptyMap(),  propsShortOpt );
     } 
     
-    @Test
+    @Test   //  Test case  1.a.13
     public void getOptionPropertiesWithFaultyOptionAndLongOptNameReturnsEmptyMap() throws Exception {
     	options.addOption(validOptionWithPropertiesOfOpt);
         options.addOption(validOptionWithPropertiesOfLongOpt);
@@ -558,7 +569,7 @@ public class Step3Test {
         assertEquals(Collections.emptyMap(),  propsLongOpt );
     }
     
-    @Test
+    @Test   //  Test case  1.b.61
     public void getOptionValueWithFaultyOptionWithIntValueReturnsNull() throws Exception {
     	options.addOption(validOptionWithKeyKV1);
         options.addOption(validOptionWithKeyKV2);
@@ -570,7 +581,7 @@ public class Step3Test {
         assertNull(cl.getOptionValue(faultyOptionWithNotExistingValue));
     }
     
-    @Test
+    @Test   //  Test case  1.b.62
     public void getOptionValueWithFaultyOptionWithStringValueReturnsNull() throws Exception {
     	options.addOption(validOptionWithKeyKV1);
         options.addOption(validOptionWithKeyKV2);
@@ -587,7 +598,7 @@ public class Step3Test {
     
     
     
-    @Test
+    @Test   //  Test case  1.b.61
     public void getOptionValuesWithFaultyOptionWithIntValueReturnNull() throws Exception {
     	options.addOption(validOptionWithKeyKV1);
         options.addOption(validOptionWithKeyKV2);
@@ -601,7 +612,7 @@ public class Step3Test {
     }
     
     
-    @Test
+    @Test   //  Test case  1.b.62
     public void getOptionValuesWithFaultyOptionWithStringValReturnNull() throws Exception {
     	options.addOption(validOptionWithKeyKV1);
         options.addOption(validOptionWithKeyKV2);
@@ -617,7 +628,7 @@ public class Step3Test {
  
     
     
-    @Test
+    @Test   //  Test case  1.c.4
     public void getParsedOptionValueWithFaultyOptionWithIntValReturnNull() throws Exception {
     	options.addOption(validOptionWithKeyKV1);
         options.addOption(validOptionWithKeyKV2);
@@ -628,7 +639,7 @@ public class Step3Test {
         assertNull(cl.getParsedOptionValue(faultyOptionWithNotExistingValue));
     }
     
-    @Test
+    @Test   //  Test case  1.c.5
     public void getParsedOptionValueWithFaultyOptionWithStringValReturnNull() throws Exception {
     	options.addOption(validOptionWithKeyKV1);
         options.addOption(validOptionWithKeyKV2);
