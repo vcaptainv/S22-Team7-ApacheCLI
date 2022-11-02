@@ -19,3 +19,8 @@ site-content
 /.project
 /.settings/
 /commons-cli.iml
+**/**/.DS_Store
+.java-version
+
+.vscode/
+.idea/
