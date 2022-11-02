@@ -152,4 +152,18 @@ public class CommandLineTest {
         assertNull(cmd.getOptionValue((Option) null));
         assertNull(cmd.getParsedOptionValue((Option) null));
     }
+
+    @Test
+    public void testCommandLineBuilder() throws Exception {
+        final Options options = new Options();
+        final Option optI = Option.builder("i").hasArg().type(Number.class).build();
+        final Option optF = Option.builder("f").hasArg().build();
+        options.addOption(optI);
+        options.addOption(optF);
+        final CommandLineParser parser = new DefaultParser();
+        final CommandLine cmd = parser.parse(options, new String[] { "-i", "123", "-f", "foo" });
+        assertNull(cmd.getOptionValue((Option) null));
+        assertNull(cmd.getParsedOptionValue((Option) null));
+    }
+
 }
