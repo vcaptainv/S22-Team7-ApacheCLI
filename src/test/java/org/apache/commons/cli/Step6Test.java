@@ -30,10 +30,10 @@ import static org.junit.Assert.*;
  */
 
 @SuppressWarnings("deprecation") // tests some deprecated classes
-public class step6 {
+public class Step6Test {
 
     /**
-     * related test case:
+     * related test case: 1.b.1
      * @throws Exception
      */
     @Test
@@ -48,7 +48,7 @@ public class step6 {
     }
 
     /**
-     * related test case:
+     * related test case: 1.b.2
      * @throws Exception
      */
     @Test
@@ -63,7 +63,7 @@ public class step6 {
     }
 
     /**
-     * related test case:
+     * related test case: 1.b.3
      * @throws Exception
      */
     @Test
@@ -78,7 +78,7 @@ public class step6 {
     }
 
     /**
-     * related test case:
+     * related test case: 1.b.4
      * @throws Exception
      */
     @Test
@@ -93,7 +93,7 @@ public class step6 {
     }
 
     /**
-     * related test case:
+     * related test case: 1.b.5
      * @throws Exception
      */
     @Test
@@ -109,7 +109,7 @@ public class step6 {
     }
 
     /**
-     * related test case:
+     * related test case: 1.b.6
      * @throws Exception
      */
     @Test
@@ -124,7 +124,7 @@ public class step6 {
     }
 
     /**
-     * related test case:
+     * related test case: 1.b.7
      * @throws Exception
      */
     @Test
@@ -139,7 +139,7 @@ public class step6 {
     }
 
     /**
-     * related test case:
+     * related test case: 1.b.8
      * @throws Exception
      */
     @Test
@@ -154,7 +154,7 @@ public class step6 {
     }
 
     /**
-     * related test case:
+     * related test case: 1.b.9
      * @throws Exception
      */
     @Test
@@ -169,7 +169,7 @@ public class step6 {
     }
 
     /**
-     * related test case:
+     * related test case: 1.b.10
      * @throws Exception
      */
     @Test
@@ -184,7 +184,7 @@ public class step6 {
     }
 
     /**
-     * related test case:
+     * related test case: 1.b.11
      * @throws Exception
      */
     @Test
@@ -199,7 +199,7 @@ public class step6 {
     }
 
     /**
-     * related test case:
+     * related test case: 1.b.12
      * @throws Exception
      */
     @Test
@@ -214,7 +214,7 @@ public class step6 {
     }
 
     /**
-     * related test case:
+     * related test case: 1.b.13
      * @throws Exception
      */
     @Test
@@ -229,7 +229,7 @@ public class step6 {
     }
 
     /**
-     * related test case:
+     * related test case: 1.b.14
      * @throws Exception
      */
     @Test
@@ -244,7 +244,7 @@ public class step6 {
     }
 
     /**
-     * related test case:
+     * related test case: 1.b.15
      * @throws Exception
      */
     @Test
@@ -259,7 +259,7 @@ public class step6 {
     }
 
     /**
-     * related test case:
+     * related test case: 1.b.16
      * @throws Exception
      */
     @Test
@@ -274,7 +274,7 @@ public class step6 {
     }
 
     /**
-     * related test case:
+     * related test case: 1.b.17
      * @throws Exception
      */
     @Test
@@ -289,7 +289,7 @@ public class step6 {
     }
 
     /**
-     * related test case:
+     * related test case: 1.b.18
      * @throws Exception
      */
     @Test
@@ -304,7 +304,7 @@ public class step6 {
     }
 
     /**
-     * related test case:
+     * related test case: 1.b.19
      * @throws Exception
      */
     @Test
@@ -319,7 +319,7 @@ public class step6 {
     }
 
     /**
-     * related test case:
+     * related test case: 1.b.20
      * @throws Exception
      */
     @Test
@@ -334,7 +334,7 @@ public class step6 {
     }
 
     /**
-     * related test case:
+     * related test case: 1.b.21
      * @throws Exception
      */
     @Test
@@ -349,7 +349,7 @@ public class step6 {
     }
 
     /**
-     * related test case:
+     * related test case: 1.b.22
      * @throws Exception
      */
     @Test
@@ -364,7 +364,7 @@ public class step6 {
     }
 
     /**
-     * related test case:
+     * related test case: 1.b.23
      * @throws Exception
      */
     @Test
@@ -379,7 +379,7 @@ public class step6 {
     }
 
     /**
-     * related test case:
+     * related test case: 1.b.24
      * @throws Exception
      */
     @Test
@@ -394,7 +394,7 @@ public class step6 {
     }
 
     /**
-     * related test case:
+     * related test case: 1.b.25
      * @throws Exception
      */
     @Test
@@ -408,7 +408,7 @@ public class step6 {
     }
 
     /**
-     * related test case:
+     * related test case: 1.b.26
      * @throws Exception
      */
     @Test
@@ -423,7 +423,7 @@ public class step6 {
     }
 
     /**
-     * related test case:
+     * related test case: 1.b.27
      * @throws Exception
      */
     @Test
@@ -438,7 +438,7 @@ public class step6 {
     }
 
     /**
-     * related test case:
+     * related test case: 1.b.28
      * @throws Exception
      */
     @Test
@@ -453,7 +453,7 @@ public class step6 {
     }
 
     /**
-     * related test case:
+     * related test case: 1.b.29
      * @throws Exception
      */
     @Test
@@ -467,7 +467,7 @@ public class step6 {
         assertEquals("13", cmd.getOptionValue((Option) null, "13"));
     }
     /**
-     * related test case:
+     * related test case: 1.b.30
      * @throws Exception
      */
     @Test
@@ -481,7 +481,7 @@ public class step6 {
     }
 
     /**
-     * related test case:
+     * related test case: 1.b.31
      * @throws Exception
      */
     @Test
@@ -496,7 +496,7 @@ public class step6 {
     }
 
     /**
-     * related test case:
+     * related test case: 1.b.32
      * @throws Exception
      */
     @Test
@@ -510,7 +510,7 @@ public class step6 {
     }
 
     /**
-     * related test case:
+     * related test case: 1.b.33
      * @throws Exception
      */
     @Test
@@ -524,7 +524,7 @@ public class step6 {
     }
 
     /**
-     * related test case:
+     * related test case: 1.b.34
      * @throws Exception
      */
     @Test
@@ -539,7 +539,7 @@ public class step6 {
     }
 
     /**
-     * related test case:
+     * related test case: 1.b.35
      * @throws Exception
      */
     @Test
@@ -555,7 +555,7 @@ public class step6 {
     }
 
     /**
-     * related test case:
+     * related test case: 1.b.36
      * @throws Exception
      */
     @Test
@@ -570,7 +570,7 @@ public class step6 {
     }
 
     /**
-     * related test case:
+     * related test case: 1.b.37
      * @throws Exception
      */
     @Test
